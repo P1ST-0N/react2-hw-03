@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ContactList from "../ContactList/ContactList";
+import SearchBox from "../SearchBox/SearchBox";
 import css from "./App.module.css";
 
 function App() {
@@ -22,12 +23,16 @@ function App() {
     contact.name.toLowerCase().includes(nameFilter.toLowerCase())
   );
 
+  const onChange = (e) => {
+    setNameFilter(e.target.value);
+  };
+
   return (
     <>
       <div>
         <h1 className={css.title}>Phonebook</h1>
         {/* <ContactForm /> */}
-        {/* <SearchBox /> */}
+        <SearchBox value={nameFilter} onChange={onChange} />
         <ContactList items={visibleContacts} />
       </div>
     </>
