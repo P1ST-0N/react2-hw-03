@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import ContactList from "../ContactList/ContactList";
 import SearchBox from "../SearchBox/SearchBox";
@@ -32,9 +32,19 @@ function App() {
     });
   };
 
+  const deleteContact = (userId) => {
+    setContats((prevContacts) => {
+      return prevContacts.filter((contact) => contact.id !== userId);
+    });
+  };
+
   const onChange = (e) => {
     setNameFilter(e.target.value);
   };
+
+  useEffect(() => {
+    window.localStorage.setItem("saved-contact", JSON.stringify(contacts));
+  }, [contacts]);
 
   return (
     <>
@@ -42,7 +52,7 @@ function App() {
         <h1 className={css.title}>Phonebook</h1>
         <ContactForm onAdd={addContact} />
         <SearchBox value={nameFilter} onChange={onChange} />
-        <ContactList items={visibleContacts} />
+        <ContactList items={visibleContacts} onDelete={deleteContact} />
       </div>
     </>
   );
